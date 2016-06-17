@@ -3,8 +3,9 @@
 #使用方式
  - batch方式：
 ```
-$batch = new BatchResult(function ($offset, $limit) use ($sysshop){
-    return $sysshop->getUserAll("AND `isdel`=0 AND `status`=0 AND (`gid`<1 OR `gid`='{$_GET[id]}')", "ORDER BY `dateline` DESC LIMIT {$offset},{$limit}", 'id, name, aleph');
+$batch = new BatchResult(function ($offset, $limit){
+    //你自己的查询逻辑
+    return $db->query("SELECT * FROM test LIMIT {$offset},{$limit}")->findAll();
 });
 $batch->batchSize = 2000;
 $batch->each = false;
@@ -19,7 +20,8 @@ foreach ($batch as $items){
  - each方式：
 ```
 $batch = new BatchResult(function ($offset, $limit) use ($sysshop){
-    return $sysshop->getUserAll("AND `isdel`=0 AND `status`=0 AND (`gid`<1 OR `gid`='{$_GET[id]}')", "ORDER BY `dateline` DESC LIMIT {$offset},{$limit}", 'id, name, aleph');
+    //你自己的查询逻辑
+    return $db->query("SELECT * FROM test LIMIT {$offset},{$limit}")->findAll();
 });
 $batch->batchSize = 2000;
 $batch->each = true;
